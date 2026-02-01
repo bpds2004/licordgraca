@@ -886,6 +886,13 @@
         </div>
     </section>
 
+    <div class="mobile-popup" id="mobile-popup" role="dialog" aria-modal="true" aria-labelledby="mobile-popup-title" aria-describedby="mobile-popup-message">
+        <div class="mobile-popup__content">
+            <h3 id="mobile-popup-title">Dica para o telemóvel</h3>
+            <p id="mobile-popup-message">Para uma melhor experiência, use o telemóvel deitado (modo horizontal).</p>
+            <button type="button" class="mobile-popup__close" id="mobile-popup-close">Entendi</button>
+        </div>
+    </div>
     <footer>
         <div class="container">
             <p>&copy; 2025 Licor Dª Graça. Todos os direitos reservados.</p>
@@ -1034,6 +1041,15 @@
                         btn.style.transform = "scale(1)";
                     });
                 });
+
+
+                <div class="mobile-popup" id="mobile-popup" role="dialog" aria-modal="true" aria-labelledby="mobile-popup-title" aria-describedby="mobile-popup-message">
+                    <div class="mobile-popup__content">
+                        <h3 id="mobile-popup-title">Dica para o telemóvel</h3>
+                        <p id="mobile-popup-message">Para uma melhor experiência, use o telemóvel deitado (modo horizontal).</p>
+                        <button type="button" class="mobile-popup__close" id="mobile-popup-close">Entendi</button>
+                    </div>
+                </div>
 
                 const feedbackModal = document.getElementById("feedback-modal");
                 const feedbackOpen = document.getElementById("feedback-open");
