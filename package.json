@@ -1,0 +1,10 @@
+{
+  "name": "licor-dona-graca",
+  "private": true,
+  "description": "Website Licor Dona Graça",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "nodemailer": "^6.9.13"
+  }
+}

@@ -984,33 +984,21 @@
 
   
 
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-            const EMAILJS_SERVICE_ID = 'service_1tzd8x1';
-            const EMAILJS_TEMPLATE_ID = 'template_2hm0crs';
-            const EMAILJS_PUBLIC_KEY = 'ShZdznr3UYWwWjQ5r';
-            const STORE_OWNER_EMAIL = 'licor.donagraca@gmail.com';
+            const sendOrderEmail = async (payload) => {
+                const response = await fetch('/api/order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
 
-            if (typeof emailjs !== 'undefined' && !EMAILJS_PUBLIC_KEY.startsWith('replace_')) {
-                emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-            }
-
-            const isEmailJsConfigured = () => (
-                !EMAILJS_SERVICE_ID.startsWith('replace_') &&
-                !EMAILJS_TEMPLATE_ID.startsWith('replace_') &&
-                !EMAILJS_PUBLIC_KEY.startsWith('replace_')
-            );
-
-            const sendOrderEmail = (templateParams) => {
-                if (typeof emailjs === 'undefined') {
-                    return Promise.reject(new Error('EmailJS não está disponível.'));
+                if (!response.ok) {
+                    throw new Error('Falha no envio do email.');
                 }
 
-                if (!isEmailJsConfigured()) {
-                    return Promise.reject(new Error('Configuração do EmailJS em falta.'));
-                }
-
-                return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+                return response.json();
             };
 
             document.addEventListener("DOMContentLoaded", function () {
@@ -1157,7 +1145,6 @@
 
                     const templateParams = {
                         ...orderPayload,
-                        owner_email: STORE_OWNER_EMAIL,
                         payment_method: paymentMethodLabels[selectedPaymentMethod] || selectedPaymentMethod,
                         mbway_number: mbwayNumber || "N/A"
                     };
@@ -1168,7 +1155,7 @@
                             confirmationSection.style.display = "block";
                         })
                         .catch(() => {
-                            alert("Não foi possível enviar o email automaticamente. Verifique a configuração do EmailJS.");
+                            alert("Não foi possível enviar o email automaticamente. Verifique a configuração do envio no servidor.");
                         });
                 });
 
@@ -1397,8 +1384,7 @@
                     order_total: `€${total.toFixed(2)}`
                 };
                 const emailParams = {
-                    ...orderPayload,
-                    owner_email: STORE_OWNER_EMAIL
+                    ...orderPayload
                 };
 
                 const resumo = [
@@ -1424,7 +1410,7 @@
 
                 if (typeof sendOrderEmail === 'function') {
                     sendOrderEmail(emailParams).catch(() => {
-                        alert("Não foi possível enviar o email automaticamente. Verifique a configuração do EmailJS.");
+                        alert("Não foi possível enviar o email automaticamente. Verifique a configuração do envio no servidor.");
                     });
                 }
             }
