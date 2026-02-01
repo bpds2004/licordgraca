@@ -272,11 +272,13 @@ nav ul li a:hover {
 
 .product .card-face img {
     max-width: 120%;
-    height: 100%;
+    height: 120%;
 }
 
 .kit-card .card-media {
     height: 220px;
+    width: 200px;
+
 }
 
 .kit-card .card-face {
@@ -284,7 +286,7 @@ nav ul li a:hover {
 }
 
 .kit-card .card-face img {
-    max-width: 100%;
+    max-width: 140%;
     height: 100%;
 }
 
