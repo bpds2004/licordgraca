@@ -826,6 +826,11 @@ nav ul li a:hover {
     max-height: 600px;
 }
 
+.kit-card--featured,
+.kit-card--premium {
+    max-width: 480px;
+}
+
 .kit-card--featured {
     grid-column: 1 / -1;
     justify-self: center;
@@ -854,6 +859,20 @@ nav ul li a:hover {
 
 .kit-card:hover {
     box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
+}
+
+@media (max-width: 760px) {
+    .product-list--honor {
+        grid-template-columns: 1fr;
+    }
+
+    .kits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kit-card--featured {
+        grid-column: auto;
+    }
 }
 
 @media (max-width: 760px) {
