@@ -831,12 +831,13 @@ nav ul li a:hover {
 .kit-card--featured {
     grid-column: 1 / -1;
     justify-self: center;
-    max-width: 600px;
+    min-width: 300px;
 }
 
 .kit-card--premium,
 .kit-card--gift {
-    max-width: 480px;
+    max-width: 400px;
+    min-width: 350px;
 }
 
 .event-form,
