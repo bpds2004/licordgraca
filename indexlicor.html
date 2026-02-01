@@ -1043,13 +1043,32 @@
                 });
 
 
-                <div class="mobile-popup" id="mobile-popup" role="dialog" aria-modal="true" aria-labelledby="mobile-popup-title" aria-describedby="mobile-popup-message">
-                    <div class="mobile-popup__content">
-                        <h3 id="mobile-popup-title">Dica para o telemóvel</h3>
-                        <p id="mobile-popup-message">Para uma melhor experiência, use o telemóvel deitado (modo horizontal).</p>
-                        <button type="button" class="mobile-popup__close" id="mobile-popup-close">Entendi</button>
-                    </div>
-                </div>
+                const mobilePopup = document.getElementById("mobile-popup");
+                const mobilePopupClose = document.getElementById("mobile-popup-close");
+                const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+                const mobileOrientationQuery = window.matchMedia("(orientation: portrait)");
+
+                const toggleMobilePopup = () => {
+                    if (!mobilePopup) return;
+                    const isPortrait = mobileOrientationQuery.matches;
+                    const shouldShow = hasTouch && isPortrait;
+                    mobilePopup.classList.toggle("is-visible", shouldShow);
+                    mobilePopup.setAttribute("aria-hidden", String(!shouldShow));
+                };
+
+                if (mobilePopup) {
+                    mobilePopup.setAttribute("aria-hidden", "true");
+                    toggleMobilePopup();
+                    mobileOrientationQuery.addEventListener("change", toggleMobilePopup);
+                }
+
+                if (mobilePopupClose) {
+                    mobilePopupClose.addEventListener("click", () => {
+                        if (!mobilePopup) return;
+                        mobilePopup.classList.remove("is-visible");
+                        mobilePopup.setAttribute("aria-hidden", "true");
+                    });
+                }
 
                 const feedbackModal = document.getElementById("feedback-modal");
                 const feedbackOpen = document.getElementById("feedback-open");
@@ -1132,6 +1151,9 @@
                         selectedPaymentMethod = option.dataset.method || 'mbway';
                         paymentOptions.forEach(btn => btn.classList.remove("is-active"));
                         option.classList.add("is-active");
+                        if (!mbwayFields || !entityFields) {
+                            return;
+                        }
                         const isMbway = selectedPaymentMethod === "mbway";
                         mbwayFields.style.display = isMbway ? "block" : "none";
                         entityFields.style.display = isMbway ? "none" : "block";
@@ -1142,13 +1164,15 @@
                     paymentOptions[0].click();
                 }
 
-                paymentConfirm.addEventListener("click", () => {
+                if (paymentConfirm) {
+                    paymentConfirm.addEventListener("click", () => {
                     if (!orderPayload) {
                         alert("Nenhuma encomenda encontrada.");
                         return;
                     }
 
-                    const mbwayNumber = document.getElementById("mbway-number").value.trim();
+                    const mbwayFieldInput = document.getElementById("mbway-number");
+                    const mbwayNumber = mbwayFieldInput?.value.trim() || "";
                     if (selectedPaymentMethod === "mbway" && !mbwayNumber) {
                         alert("Indique o número MB Way.");
                         return;
@@ -1162,13 +1186,18 @@
 
                     sendOrderEmail(templateParams)
                         .then(() => {
-                            paymentSection.style.display = "none";
-                            confirmationSection.style.display = "block";
+                            if (paymentSection) {
+                                paymentSection.style.display = "none";
+                            }
+                            if (confirmationSection) {
+                                confirmationSection.style.display = "block";
+                            }
                         })
                         .catch(() => {
                             alert("Não foi possível enviar o email automaticamente. Verifique a configuração do envio no servidor.");
                         });
-                });
+                    });
+                }
 
                 const eventList = document.getElementById("event-list");
                 if (eventList) {
