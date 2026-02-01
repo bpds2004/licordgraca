@@ -172,6 +172,14 @@ nav ul li a:hover {
     flex-wrap: wrap;
 }
 
+.product-list--honor {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 720px;
+    margin: 0 auto;
+}
+
 .product {
     background: #000;
     border: 1px solid #daa520;
@@ -256,6 +264,15 @@ nav ul li a:hover {
     max-width: 200%;
     height: 150%;
     object-fit: contain;
+}
+
+.product .card-media {
+    height: 200px;
+}
+
+.product .card-face img {
+    max-width: 90%;
+    height: 100%;
 }
 
 .card-face-back {
@@ -768,6 +785,8 @@ nav ul li a:hover {
 
 .kits-grid {
     align-items: start;
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    justify-items: center;
 }
 
 
@@ -794,6 +813,12 @@ nav ul li a:hover {
     max-height: 600px;
 }
 
+.kit-card--featured {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 520px;
+}
+
 .event-form,
 .event-calendar {
     padding: 24px;
@@ -816,6 +841,20 @@ nav ul li a:hover {
 
 .kit-card:hover {
     box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
+}
+
+@media (max-width: 760px) {
+    .product-list--honor {
+        grid-template-columns: 1fr;
+    }
+
+    .kits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kit-card--featured {
+        grid-column: auto;
+    }
 }
 
 .kit-card h3,
