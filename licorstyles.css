@@ -875,6 +875,20 @@ nav ul li a:hover {
     }
 }
 
+@media (max-width: 760px) {
+    .product-list--honor {
+        grid-template-columns: 1fr;
+    }
+
+    .kits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .kit-card--featured {
+        grid-column: auto;
+    }
+}
+
 .kit-card h3,
 .event-form h3,
 .event-calendar h3 {
