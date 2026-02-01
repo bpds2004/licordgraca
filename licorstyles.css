@@ -828,15 +828,15 @@ nav ul li a:hover {
     max-height: 600px;
 }
 
-.kit-card--featured,
-.kit-card--premium {
-    max-width: 480px;
-}
-
 .kit-card--featured {
     grid-column: 1 / -1;
     justify-self: center;
-    max-width: 520px;
+    max-width: 600px;
+}
+
+.kit-card--premium,
+.kit-card--gift {
+    max-width: 480px;
 }
 
 .event-form,
