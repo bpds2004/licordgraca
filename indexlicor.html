@@ -969,10 +969,29 @@
             const EMAILJS_SERVICE_ID = 'replace_with_your_service_id';
             const EMAILJS_TEMPLATE_ID = 'replace_with_your_template_id';
             const EMAILJS_PUBLIC_KEY = 'replace_with_your_public_key';
+            const STORE_OWNER_EMAIL = 'licor.donagraca@gmail.com';
 
             if (typeof emailjs !== 'undefined' && !EMAILJS_PUBLIC_KEY.startsWith('replace_')) {
                 emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
             }
+
+            const isEmailJsConfigured = () => (
+                !EMAILJS_SERVICE_ID.startsWith('replace_') &&
+                !EMAILJS_TEMPLATE_ID.startsWith('replace_') &&
+                !EMAILJS_PUBLIC_KEY.startsWith('replace_')
+            );
+
+            const sendOrderEmail = (templateParams) => {
+                if (typeof emailjs === 'undefined') {
+                    return Promise.reject(new Error('EmailJS não está disponível.'));
+                }
+
+                if (!isEmailJsConfigured()) {
+                    return Promise.resolve({ skipped: true });
+                }
+
+                return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+            };
 
             document.addEventListener("DOMContentLoaded", function () {
                 // Animação de fade-in nos elementos ao carregar
@@ -1118,24 +1137,12 @@
 
                     const templateParams = {
                         ...orderPayload,
+                        owner_email: STORE_OWNER_EMAIL,
                         payment_method: paymentMethodLabels[selectedPaymentMethod] || selectedPaymentMethod,
                         mbway_number: mbwayNumber || "N/A"
                     };
 
-                    const enviarEmail = () => {
-                        if (typeof emailjs === 'undefined') {
-                            return Promise.reject(new Error('EmailJS não está disponível.'));
-                        }
-
-                        if (!EMAILJS_SERVICE_ID.startsWith('replace_') &&
-                            !EMAILJS_TEMPLATE_ID.startsWith('replace_') &&
-                            !EMAILJS_PUBLIC_KEY.startsWith('replace_')) {
-                            return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-                        }
-                        return Promise.reject(new Error('Configuração do EmailJS em falta.'));
-                    };
-
-                    enviarEmail()
+                    sendOrderEmail(templateParams)
                         .then(() => {
                             paymentSection.style.display = "none";
                             confirmationSection.style.display = "block";
@@ -1369,6 +1376,10 @@
                     order_shipping: `€${shippingTotal.toFixed(2)}`,
                     order_total: `€${total.toFixed(2)}`
                 };
+                const emailParams = {
+                    ...orderPayload,
+                    owner_email: STORE_OWNER_EMAIL
+                };
 
                 const resumo = [
                     `<strong>Nome:</strong> ${firstName} ${lastName}`,
@@ -1390,6 +1401,12 @@
                 modal.classList.add('is-visible');
                 modal.setAttribute('aria-hidden', 'false');
                 document.getElementById('checkout').style.display = 'none';
+
+                if (typeof sendOrderEmail === 'function') {
+                    sendOrderEmail(emailParams).catch(() => {
+                        alert("Não foi possível enviar o email automaticamente. Verifique a configuração do EmailJS.");
+                    });
+                }
             }
 
             const orderSummaryClose = document.getElementById('order-summary-close');
