@@ -799,6 +799,21 @@ nav ul li a:hover {
     padding: 24px;
 }
 
+.event-calendar {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at top, rgba(255, 215, 0, 0.08), transparent 45%), #000;
+}
+
+.event-calendar::before {
+    content: "";
+    position: absolute;
+    inset: -120px;
+    background: conic-gradient(from 180deg, transparent, rgba(255, 215, 0, 0.12), transparent 45%);
+    animation: calendarGlow 12s linear infinite;
+    pointer-events: none;
+}
+
 .kit-card:hover {
     box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
 }
@@ -808,6 +823,8 @@ nav ul li a:hover {
 .event-calendar h3 {
     color: #FFD700;
     margin: 0;
+    position: relative;
+    z-index: 1;
 }
 
 .kit-card label {
@@ -951,20 +968,101 @@ nav ul li a:hover {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: 12px;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
 }
 
 .event-calendar li {
-    background: #111;
-    padding: 12px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(17, 17, 17, 0.95));
+    padding: 14px 16px;
+    border-radius: 12px;
     display: grid;
-    gap: 6px;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: center;
+    border: 1px solid rgba(255, 215, 0, 0.25);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    background-size: 200% 200%;
+    animation: eventShimmer 8s ease infinite;
+}
+
+.event-calendar li:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 16px 28px rgba(255, 215, 0, 0.25);
+}
+
+.event-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 1.4rem;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    box-shadow: inset 0 0 12px rgba(255, 215, 0, 0.25);
+    animation: iconFloat 3s ease-in-out infinite;
+}
+
+.event-details {
+    display: grid;
+    gap: 4px;
+    text-align: left;
+}
+
+.event-date {
+    font-weight: 700;
+    color: #ffd966;
+    letter-spacing: 0.02em;
+}
+
+.event-title {
+    font-size: 1.05rem;
+    color: #fff;
+}
+
+.event-location {
+    font-size: 0.95rem;
+    color: #d6c47a;
 }
 
 .event-calendar .event-empty {
     text-align: center;
     color: #ccc;
+}
+
+@keyframes iconFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes eventShimmer {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes calendarGlow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .contact-info {
