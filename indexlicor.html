@@ -986,9 +986,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
-            const EMAILJS_SERVICE_ID = 'replace_with_your_service_id';
-            const EMAILJS_TEMPLATE_ID = 'replace_with_your_template_id';
-            const EMAILJS_PUBLIC_KEY = 'replace_with_your_public_key';
+            const EMAILJS_SERVICE_ID = 'service_1tzd8x1';
+            const EMAILJS_TEMPLATE_ID = 'template_2hm0crs';
+            const EMAILJS_PUBLIC_KEY = '9hM1qPPWmH3480UXm';
             const STORE_OWNER_EMAIL = 'licor.donagraca@gmail.com';
 
             if (typeof emailjs !== 'undefined' && !EMAILJS_PUBLIC_KEY.startsWith('replace_')) {
@@ -1007,7 +1007,7 @@
                 }
 
                 if (!isEmailJsConfigured()) {
-                    return Promise.resolve({ skipped: true });
+                    return Promise.reject(new Error('Configuração do EmailJS em falta.'));
                 }
 
                 return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
