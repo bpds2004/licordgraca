@@ -975,17 +975,22 @@
                 emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
             }
 
+            const isEmailJsConfigured = () => (
+                !EMAILJS_SERVICE_ID.startsWith('replace_') &&
+                !EMAILJS_TEMPLATE_ID.startsWith('replace_') &&
+                !EMAILJS_PUBLIC_KEY.startsWith('replace_')
+            );
+
             const sendOrderEmail = (templateParams) => {
                 if (typeof emailjs === 'undefined') {
                     return Promise.reject(new Error('EmailJS não está disponível.'));
                 }
 
-                if (!EMAILJS_SERVICE_ID.startsWith('replace_') &&
-                    !EMAILJS_TEMPLATE_ID.startsWith('replace_') &&
-                    !EMAILJS_PUBLIC_KEY.startsWith('replace_')) {
-                    return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+                if (!isEmailJsConfigured()) {
+                    return Promise.resolve({ skipped: true });
                 }
-                return Promise.reject(new Error('Configuração do EmailJS em falta.'));
+
+                return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
             };
 
             document.addEventListener("DOMContentLoaded", function () {
