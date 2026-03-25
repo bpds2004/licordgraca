@@ -572,30 +572,13 @@
                     <h3>Calendário</h3>
                     <ul id="event-list">
                         <li class="event-item">
-                            <span class="event-icon" aria-hidden="true">🎪</span>
-                            <div class="event-details">
-                                <span class="event-date">05 a 08 de fevereiro de 2026</span>
-                                <span class="event-title">Feira do Fumeiro</span>
-                                <span class="event-location"><span aria-hidden="true">📍</span> Vinhais</span>
-                            </div>
-                        </li>
-                        <li class="event-item">
-                            <span class="event-icon" aria-hidden="true">🔥</span>
-                            <div class="event-details">
-                                <span class="event-date">20 a 22 de fevereiro de 2026</span>
-                                <span class="event-title">Feira do Queijo</span>
-                                <span class="event-location"><span aria-hidden="true">📍</span> Celorico da Beira</span>
-                            </div>
-                        </li>
-                        <li class="event-item">
                             <span class="event-icon" aria-hidden="true">✨</span>
                             <div class="event-details">
-                                <span class="event-date">Brevemente</span>
+                                <span class="event-date">23 de março a 5 de abril de 2026</span>
                                 <span class="event-title">Mercado de Páscoa</span>
                                 <span class="event-location"><span aria-hidden="true">📍</span> Palácio do gelo - Viseu</span>
                             </div>
                         </li>
-                        
                     </ul>
                 </div>
             </div>
@@ -1003,6 +986,13 @@
             };
 
             document.addEventListener("DOMContentLoaded", function () {
+                const isAdult = window.confirm("Este site contém bebidas alcoólicas. Confirma que tem mais de 18 anos?");
+                if (!isAdult) {
+                    alert("É necessário ter mais de 18 anos para aceder ao site.");
+                    window.location.href = "about:blank";
+                    return;
+                }
+
                 // Animação de fade-in nos elementos ao carregar
                 const elements = document.querySelectorAll(".fade-in");
                 elements.forEach(el => {
