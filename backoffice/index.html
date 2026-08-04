@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Backoffice · Licor Dª Graça</title>
+  <link rel="icon" type="image/png" href="/licordgraca.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/backoffice/styles.css">
+</head>
+<body>
+  <main id="login-screen" class="login-screen">
+    <section class="login-card" aria-labelledby="login-title">
+      <img src="/licordgraca.png" alt="Licor Dª Graça" class="login-logo">
+      <p class="eyebrow">Gestão do site</p>
+      <h1 id="login-title">Bem-vinda ao backoffice</h1>
+      <p class="login-copy">Entre com a conta autorizada para alterar o conteúdo da loja.</p>
+      <form id="login-form" class="login-form">
+        <label>Email
+          <input id="login-email" type="email" autocomplete="email" required placeholder="nome@exemplo.pt">
+        </label>
+        <label>Palavra-passe
+          <input id="login-password" type="password" autocomplete="current-password" required minlength="6" placeholder="••••••••">
+        </label>
+        <button class="button button-primary button-full" type="submit">Entrar</button>
+      </form>
+      <p id="login-status" class="form-status" role="status" aria-live="polite"></p>
+      <a class="public-link" href="/">← Voltar ao site público</a>
+    </section>
+  </main>
+
+  <div id="admin-app" class="admin-app" hidden>
+    <aside class="sidebar">
+      <a href="/" class="brand" target="_blank" rel="noopener">
+        <img src="/licordgraca.png" alt="">
+        <span><strong>Licor Dª Graça</strong><small>Backoffice</small></span>
+      </a>
+      <nav id="admin-nav" class="admin-nav" aria-label="Secções do backoffice"></nav>
+      <div class="sidebar-footer">
+        <span id="admin-email"></span>
+        <button id="logout-button" class="text-button" type="button">Terminar sessão</button>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="workspace-header">
+        <div>
+          <p class="eyebrow">Editor do site público</p>
+          <h1 id="view-title">Visão geral</h1>
+          <p id="view-description" class="view-description"></p>
+        </div>
+        <div class="header-actions">
+          <span id="dirty-indicator" class="dirty-indicator">Tudo guardado</span>
+          <a class="button button-secondary" href="/" target="_blank" rel="noopener">Ver site</a>
+          <button id="save-button" class="button button-primary" type="button">Guardar alterações</button>
+        </div>
+      </header>
+
+      <div id="setup-alert" class="setup-alert" hidden>
+        <strong>Configuração inicial necessária</strong>
+        <span>Execute o ficheiro <code>supabase/site-cms.sql</code> no projeto Supabase para ativar a gravação.</span>
+      </div>
+
+      <section id="editor" class="editor" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <input id="import-file" type="file" accept="application/json" hidden>
+
+  <script type="module" src="/backoffice/app.js"></script>
+</body>
+</html>

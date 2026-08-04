@@ -1,3 +1,12 @@
 {
-  "rewrites": [{ "source": "/", "destination": "/indexlicor.html" }]
+  "rewrites": [
+    { "source": "/", "destination": "/indexlicor.html" },
+    { "source": "/backoffice", "destination": "/backoffice/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/backoffice/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    }
+  ]
 }

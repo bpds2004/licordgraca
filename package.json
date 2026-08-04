@@ -4,6 +4,9 @@
   "description": "Website Licor Dona Graça",
   "version": "1.0.0",
   "license": "UNLICENSED",
+  "scripts": {
+    "check": "node --check site-content.js && node --check backoffice/app.js && node scripts/validate-site.mjs"
+  },
   "dependencies": {
     "nodemailer": "^6.9.13"
   }

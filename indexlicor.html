@@ -8,6 +8,7 @@
     <link rel="apple-touch-icon" href="/licordgraca.png">
     <link rel="stylesheet" href="licorstyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script type="module" src="/site-content.js"></script>
 </head>
 <body>
     <header>
@@ -1018,9 +1019,10 @@
             };
 
             document.addEventListener("DOMContentLoaded", function () {
-                const isAdult = window.confirm("Este site contém bebidas alcoólicas. Confirma que tem mais de 18 anos?");
+                const ageGate = window.siteContent?.ageGate || {};
+                const isAdult = ageGate.enabled === false || window.confirm(ageGate.question || "Este site contém bebidas alcoólicas. Confirma que tem mais de 18 anos?");
                 if (!isAdult) {
-                    alert("É necessário ter mais de 18 anos para aceder ao site.");
+                    alert(ageGate.deniedMessage || "É necessário ter mais de 18 anos para aceder ao site.");
                     window.location.href = "about:blank";
                     return;
                 }
@@ -1227,8 +1229,7 @@
             });
 
 
-            const SHIPPING_BASE = 4.5;
-            const SHIPPING_PER_EXTRA_ITEM = 0.5;
+            const getCommerceSettings = () => window.siteContent?.commerce || {};
             let subtotal = 0;
             let shippingTotal = 0;
             let total = 0;
@@ -1316,7 +1317,10 @@
                 if (quantity === 0) {
                     return 0;
                 }
-                return SHIPPING_BASE + Math.max(0, quantity - 1) * SHIPPING_PER_EXTRA_ITEM;
+                const commerce = getCommerceSettings();
+                const shippingBase = Number(commerce.shippingBase ?? 4.5);
+                const shippingExtraItem = Number(commerce.shippingExtraItem ?? 0.5);
+                return shippingBase + Math.max(0, quantity - 1) * shippingExtraItem;
             }
 
             function atualizarTotal() {
@@ -1331,7 +1335,8 @@
                 shippingTotal = calcularPortes(Array.from(items));
                 total = subtotal + shippingTotal;
                 document.getElementById('cart-subtotal').textContent = `Subtotal: €${subtotal.toFixed(2)}`;
-                document.getElementById('cart-shipping').textContent = `Portes (Portugal continental): €${shippingTotal.toFixed(2)}`;
+                const shippingLabel = getCommerceSettings().shippingLabel || 'Portes (Portugal continental)';
+                document.getElementById('cart-shipping').textContent = `${shippingLabel}: €${shippingTotal.toFixed(2)}`;
                 document.getElementById('cart-total').textContent = `Total: €${total.toFixed(2)}`;
             }
 
@@ -1342,10 +1347,11 @@
                 shippingTotal = 0;
                 total = 0;
                 document.getElementById('cart-subtotal').textContent = 'Subtotal: €0.00';
-                document.getElementById('cart-shipping').textContent = 'Portes (Portugal continental): €0.00';
+                const shippingLabel = getCommerceSettings().shippingLabel || 'Portes (Portugal continental)';
+                document.getElementById('cart-shipping').textContent = `${shippingLabel}: €0.00`;
                 document.getElementById('cart-total').textContent = 'Total: €0.00';
                 document.getElementById('checkout-subtotal').textContent = 'Subtotal: €0.00';
-                document.getElementById('checkout-shipping').textContent = 'Portes (Portugal continental): €0.00';
+                document.getElementById('checkout-shipping').textContent = `${shippingLabel}: €0.00`;
                 document.getElementById('checkout-total').textContent = 'Total: €0.00';
                 const purchaseButton = document.getElementById('purchase-button');
                 if (purchaseButton) {
@@ -1373,7 +1379,8 @@
                     checkoutList.appendChild(li);
                 }
                 document.getElementById('checkout-subtotal').textContent = `Subtotal: €${subtotal.toFixed(2)}`;
-                document.getElementById('checkout-shipping').textContent = `Portes (Portugal continental): €${shippingTotal.toFixed(2)}`;
+                const shippingLabel = getCommerceSettings().shippingLabel || 'Portes (Portugal continental)';
+                document.getElementById('checkout-shipping').textContent = `${shippingLabel}: €${shippingTotal.toFixed(2)}`;
                 document.getElementById('checkout-total').textContent = `Total: €${total.toFixed(2)}`;
                 const purchaseButton = document.getElementById('purchase-button');
                 purchaseButton.setAttribute('data-tooltip', `Total: €${total.toFixed(2)}`);
@@ -1457,7 +1464,7 @@
                     `<strong>Método de pagamento:</strong> ${metodoPagamentoLabel}`,
                     `<strong>Produtos:</strong><br>${produtos.replace(/\n/g, '<br>')}`,
                     `<strong>Subtotal:</strong> €${subtotal.toFixed(2)}`,
-                    `<strong>Portes (Portugal continental):</strong> €${shippingTotal.toFixed(2)}`,
+                    `<strong>${getCommerceSettings().shippingLabel || 'Portes (Portugal continental)'}:</strong> €${shippingTotal.toFixed(2)}`,
                     `<strong>Total:</strong> €${total.toFixed(2)}`,
                     'Receberá entre 1 a 2 dias úteis informações para realizar o pagamento.'
                 ].join('<br>');

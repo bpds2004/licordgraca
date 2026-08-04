@@ -1,0 +1,291 @@
+{
+  "version": 1,
+  "meta": {
+    "title": "Licor Dª Graça - Loja Online",
+    "description": "Licores artesanais da Tia Graça, feitos com paixão e tradição.",
+    "logo": "/licordgraca.png",
+    "favicon": "/licordgraca.png"
+  },
+  "theme": {
+    "primary": "#daa520",
+    "accent": "#ffd700",
+    "background": "#000000",
+    "surface": "#111111",
+    "text": "#f1f1f1",
+    "heroImage": ""
+  },
+  "navigation": {
+    "home": "Início",
+    "products": "Produtos",
+    "kits": "Os nossos kits",
+    "events": "Próximos Eventos",
+    "about": "Sobre",
+    "faq": "FAQ",
+    "contact": "Contactos",
+    "cart": "Carrinho"
+  },
+  "hero": {
+    "title": "O sabor único em cada gota",
+    "subtitle": "Descubra os licores artesanais da Tia Graça, feitos com paixão e tradição.",
+    "button": "Explore os produtos"
+  },
+  "productSection": {
+    "visible": true,
+    "title": "Os Nossos Produtos",
+    "sizeLabel": "Escolhe o tamanho",
+    "addButton": "Adicionar ao Carrinho"
+  },
+  "productCategories": [
+    { "id": "traditional", "title": "Sabores tradicionais", "layout": "standard" },
+    { "id": "honor", "title": "Sabores d'Honra", "layout": "honor" }
+  ],
+  "products": [
+    {
+      "id": "lamour",
+      "categoryId": "traditional",
+      "name": "L'amour",
+      "description": "Explosão de frutos vermelhos, doce e vibrante, perfeita para qualquer ocasião.",
+      "image": "/frutos.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "fresh",
+      "categoryId": "traditional",
+      "name": "Fresh",
+      "description": "Frescura cítrica envolvente, como um pôr do sol de verão em cada gota.",
+      "image": "/limao.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "afrodite",
+      "categoryId": "traditional",
+      "name": "Afrodite",
+      "description": "Chocolate sedoso com um toque de limão refrescante, uma combinação irresistível.",
+      "image": "/chocolimao.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "fonte-azul",
+      "categoryId": "traditional",
+      "name": "Fonte Azul",
+      "description": "Laranja suculenta com um toque doce, perfeita para momentos de celebração.",
+      "image": "/laranja.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "pleasure",
+      "categoryId": "traditional",
+      "name": "Pleasure",
+      "description": "Grãos de café selecionados na perfeição para um sabor intenso e reconfortante.",
+      "image": "/cafe.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "morais-de-carvalho",
+      "categoryId": "honor",
+      "name": "Morais de Carvalho",
+      "description": "Chocolate com pimenta ardente, uma combinação audaz e inesquecível.",
+      "image": "/chocopimenta.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "joao-ramalho",
+      "categoryId": "honor",
+      "name": "João Ramalho",
+      "description": "Saboreie a doçura do tradicional pastel de Vouzela, envolto em licor.",
+      "image": "/pastel.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "s-frei-gil",
+      "categoryId": "honor",
+      "name": "S Frei Gil",
+      "description": "Infusão de ervas aromáticas, um licor que acalma e revigora.",
+      "image": "/ervas.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    },
+    {
+      "id": "3-marias",
+      "categoryId": "honor",
+      "name": "3 Marias",
+      "description": "Mistura harmoniosa de chocolate e amêndoas, homenagem às três avós da tradição.",
+      "image": "/3marias.png",
+      "visible": true,
+      "sizes": [
+        { "label": "50ml", "price": 4.5 },
+        { "label": "100ml", "price": 8 },
+        { "label": "200ml", "price": 16 },
+        { "label": "500ml", "price": 39.99 }
+      ]
+    }
+  ],
+  "kitSection": {
+    "visible": true,
+    "title": "Os nossos kits",
+    "addButton": "Adicionar ao Carrinho"
+  },
+  "kits": [
+    {
+      "id": "mini-sabores",
+      "name": "Kit Mini Sabores",
+      "description": "Seleção surpresa de 5 mini garrafas, ideal para provar os clássicos da Tia Graça.",
+      "image": "/caixamadeira.png",
+      "price": 20,
+      "detail": "Sabores predefinidos (5 x 100ml)",
+      "visible": true,
+      "featured": true,
+      "optionGroups": []
+    },
+    {
+      "id": "set-honra",
+      "name": "Set de Honra",
+      "description": "Dupla premium com copo shot incluído para brindar em grande estilo.",
+      "image": "/caixadedois.png",
+      "price": 11,
+      "detail": "",
+      "visible": true,
+      "featured": false,
+      "optionGroups": [
+        { "label": "Escolhe o 1.º sabor", "options": ["S Frei Gil", "João Ramalho", "Morais de Carvalho"] },
+        { "label": "Escolhe o 2.º sabor", "options": ["S Frei Gil", "João Ramalho", "Morais de Carvalho"] }
+      ]
+    },
+    {
+      "id": "oferta-especial",
+      "name": "Kit Oferta Especial",
+      "description": "Garrafa de 200ml com oferta à escolha para um presente memorável.",
+      "image": "/kit.png",
+      "price": 20,
+      "detail": "",
+      "visible": true,
+      "featured": false,
+      "optionGroups": [
+        { "label": "Escolhe o sabor", "options": ["L'amour", "Fresh", "Pleasure", "João Ramalho", "S Frei Gil", "Morais de Carvalho", "Afrodite", "Fonte Azul"] },
+        { "label": "Escolhe a oferta", "options": ["Copo de shot vidro", "Bombons", "Copos de Chocolate"] }
+      ]
+    }
+  ],
+  "eventSection": {
+    "visible": true,
+    "title": "Próximos Eventos",
+    "subtitle": "Calendário"
+  },
+  "events": [
+    { "id": "castelo-2026", "icon": "🎇", "date": "05 a 09 de agosto de 2026", "title": "Festa do Castelo", "location": "Vouzela", "visible": true },
+    { "id": "milagres-2026", "icon": "⛪", "date": "14 e 15 de agosto de 2026", "title": "Festa da Nossa Sr.ª dos Milagres", "location": "Adside", "visible": true },
+    { "id": "cambra-2026", "icon": "🏹", "date": "22 e 23 de agosto de 2026", "title": "Feira Medieval de Cambra", "location": "Cambra", "visible": true },
+    { "id": "festival-2026", "icon": "🎉", "date": "27 a 30 de agosto de 2026", "title": "Festival Fest", "location": "Mangualde", "visible": true },
+    { "id": "sabores-2026", "icon": "🍽️", "date": "3 a 6 de setembro de 2026", "title": "Feira dos Sabores e Perdição", "location": "Castelo Branco", "visible": true }
+  ],
+  "about": {
+    "visible": true,
+    "title": "Sobre Nós",
+    "image": "/patroa.png",
+    "imageAlt": "Fotografia da fundadora",
+    "paragraphs": [
+      "Na Licor D'Graça, acreditamos na arte de criar sabores únicos. Cada garrafa é produzida com ingredientes selecionados e muito amor.",
+      "📍 Localização: Carvalhal do Estanho, Vouzela, Portugal",
+      "🍷 Fundadora: Tia Graça (Ana de Sousa), mestra na criação de sabores artesanais há quase 10 anos.",
+      "🎉 Eventos: Participe nas nossas feiras e degustações para experimentar os nossos licores ao vivo.",
+      "💌 Contacte-nos para encomendas personalizadas e ofertas especiais."
+    ]
+  },
+  "faqSection": {
+    "visible": true,
+    "title": "Perguntas e Respostas"
+  },
+  "faq": [
+    { "id": "envio", "question": "Quanto tempo demora o envio?", "answer": "As encomendas são entregues em 5 a 8 dias úteis (Portugal Continental).", "visible": true },
+    { "id": "pagamento", "question": "Quais são os modos de pagamento?", "answer": "MB Way, referência Multibanco ou transferência.", "visible": true },
+    { "id": "encontrar", "question": "Onde posso encontrar os licores?", "answer": "Em feiras locais e eventos anunciados no nosso calendário.", "visible": true },
+    { "id": "loja", "question": "Existe loja física?", "answer": "Ainda não, mas estamos a planear uma!", "visible": true },
+    { "id": "personalizacoes", "question": "É possível pedir personalizações?", "answer": "Sim! Entre em contacto para criarmos kits e sabores à medida.", "visible": true },
+    { "id": "artesanais", "question": "Os licores são artesanais?", "answer": "Sim, todos os nossos licores são feitos artesanalmente sem corantes ou aromas.", "visible": true }
+  ],
+  "contact": {
+    "visible": true,
+    "title": "Contactos",
+    "intro": "Entre em contacto connosco através dos seguintes meios:",
+    "instagramLabel": "@licordgraca",
+    "instagramUrl": "https://www.instagram.com/licordgraca",
+    "email": "licor.donagraca@gmail.com",
+    "facebookLabel": "facebook.com/Licor-D-Graca",
+    "facebookUrl": "https://www.facebook.com/people/Licor-D-Gra%C3%A7a/100063707763490",
+    "phoneLabel": "+351 938 923 021",
+    "phone": "+351938923021"
+  },
+  "feedback": {
+    "visible": true,
+    "title": "Quer deixar a sua opinião?",
+    "complaintsLabel": "Livro de Reclamações",
+    "complaintsUrl": "https://www.livroreclamacoes.pt/INICIO",
+    "buttonLabel": "Deixar Feedback"
+  },
+  "commerce": {
+    "shippingBase": 4.5,
+    "shippingExtraItem": 0.5,
+    "shippingLabel": "Portes (Portugal continental)",
+    "currency": "EUR"
+  },
+  "ageGate": {
+    "enabled": true,
+    "question": "Este site contém bebidas alcoólicas. Confirma que tem mais de 18 anos?",
+    "deniedMessage": "É necessário ter mais de 18 anos para aceder ao site."
+  },
+  "mobileHint": {
+    "title": "Dica para o telemóvel",
+    "message": "Para uma melhor experiência, use o telemóvel deitado (modo horizontal).",
+    "button": "Entendi"
+  },
+  "footer": {
+    "text": "© 2026 Licor Dª Graça. Todos os direitos reservados."
+  }
+}

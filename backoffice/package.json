@@ -1,0 +1,9 @@
+{
+  "name": "licor-dona-graca-backoffice",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Backoffice de conteúdos do site Licor Dª Graça",
+  "scripts": {
+    "dev": "npx http-server .. -p 4173 -c-1"
+  }
+}

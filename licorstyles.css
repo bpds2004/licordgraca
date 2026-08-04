@@ -1,15 +1,73 @@
 /* Importando a fonte Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
 
+:root {
+    --brand-primary: #daa520;
+    --brand-accent: #ffd700;
+    --brand-background: #000;
+    --brand-surface: #111;
+    --brand-text: #f1f1f1;
+}
+
 /* Estilos Globais */
 body {
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
-    color: #f1f1f1;
-    background-color: #000;
+    color: var(--brand-text);
+    background-color: var(--brand-background);
     overflow-x: hidden;
+}
+
+/* As variáveis abaixo são atualizadas pelo backoffice. */
+html.cms-ready body {
+    color: var(--brand-text);
+    background-color: var(--brand-background);
+}
+
+html.cms-ready header,
+html.cms-ready .hero,
+html.cms-ready footer {
+    border-color: var(--brand-primary);
+}
+
+html.cms-ready header,
+html.cms-ready nav ul li a,
+html.cms-ready .hero,
+html.cms-ready .product-category,
+html.cms-ready .kit-price,
+html.cms-ready #events h3,
+html.cms-ready .contact-info i {
+    color: var(--brand-primary);
+}
+
+html.cms-ready .hero .btn,
+html.cms-ready .product button,
+html.cms-ready .kit-card button,
+html.cms-ready .purchase-animated,
+html.cms-ready .order-summary-button {
+    background-color: var(--brand-primary);
+}
+
+html.cms-ready #products,
+html.cms-ready #kits,
+html.cms-ready #events,
+html.cms-ready #about,
+html.cms-ready #faq,
+html.cms-ready #contact,
+html.cms-ready #feedback-actions {
+    color: var(--brand-text);
+}
+
+html.cms-ready #products,
+html.cms-ready #about,
+html.cms-ready #contact {
+    background-color: var(--brand-surface);
+}
+
+[hidden] {
+    display: none !important;
 }
 
 /* Animações */
