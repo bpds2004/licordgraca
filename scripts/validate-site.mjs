@@ -6,6 +6,7 @@ const read = (path) => readFile(resolve(root, path), 'utf8');
 const content = JSON.parse(await read('content/default-content.json'));
 const vercel = JSON.parse(await read('vercel.json'));
 const publicHtml = await read('indexlicor.html');
+const publicCss = await read('licorstyles.css');
 const adminHtml = await read('backoffice/index.html');
 const adminCss = await read('backoffice/styles.css');
 
@@ -39,5 +40,11 @@ const localImages = [
 ].filter((path) => typeof path === 'string' && path.startsWith('/'));
 
 for (const image of localImages) await access(resolve(root, image.slice(1)));
+
+const localCssAssets = [...publicCss.matchAll(/url\(\s*['"]?([^'"\)]+)['"]?\s*\)/g)]
+  .map((match) => match[1])
+  .filter((asset) => !/^(?:data:|https?:|#)/i.test(asset));
+
+for (const asset of localCssAssets) await access(resolve(root, asset.replace(/^\//, '')));
 
 console.log(`Validação concluída: ${content.products.length} produtos, ${content.kits.length} kits, ${content.events.length} eventos.`);
