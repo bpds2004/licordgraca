@@ -7,6 +7,7 @@ const content = JSON.parse(await read('content/default-content.json'));
 const vercel = JSON.parse(await read('vercel.json'));
 const publicHtml = await read('indexlicor.html');
 const adminHtml = await read('backoffice/index.html');
+const adminCss = await read('backoffice/styles.css');
 
 const assert = (condition, message) => {
   if (!condition) throw new Error(message);
@@ -17,6 +18,7 @@ assert(Array.isArray(content.products) && content.products.length > 0, 'Não exi
 assert(Array.isArray(content.kits) && content.kits.length > 0, 'Não existem kits iniciais.');
 assert(publicHtml.includes('/site-content.js'), 'O site público não carrega o gestor de conteúdo.');
 assert(adminHtml.includes('/backoffice/app.js'), 'O backoffice não carrega a aplicação.');
+assert(/\[hidden\]\s*\{[^}]*display:\s*none\s*!important/i.test(adminCss), 'Os ecrãs ocultos do backoffice podem ficar visíveis.');
 assert(vercel.rewrites.some((rule) => rule.source === '/backoffice'), 'Falta a rota do backoffice.');
 
 const categoryIds = new Set(content.productCategories.map((category) => category.id));

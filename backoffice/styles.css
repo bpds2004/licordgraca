@@ -16,6 +16,11 @@
 
 * { box-sizing: border-box; }
 
+/* Garante que os ecrãs alternam corretamente após entrar ou sair. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
@@ -198,7 +203,15 @@ code { color: var(--gold-light); }
   .brand { padding-bottom: 12px; }
   .admin-nav { display: flex; overflow-x: auto; }
   .nav-button { flex: 0 0 auto; width: auto; }
-  .sidebar-footer { display: none; }
+  .sidebar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+    padding-top: 12px;
+    flex-wrap: wrap;
+  }
   .workspace { margin-left: 0; }
   .workspace-header { position: static; padding: 20px; flex-direction: column; }
   .header-actions { justify-content: flex-start; }

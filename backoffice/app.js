@@ -314,18 +314,20 @@ const saveContent = async () => {
   if (!currentUser) return;
   dom.saveButton.disabled = true;
   dom.saveButton.textContent = 'A guardar…';
-  const payload = { id: SITE_CONTENT_ID, content, updated_by: currentUser.id, updated_at: new Date().toISOString() };
-  const { error } = await supabase.from('site_content').upsert(payload, { onConflict: 'id' });
-  dom.saveButton.disabled = false;
-  dom.saveButton.textContent = 'Guardar alterações';
-  if (error) {
+  try {
+    const payload = { id: SITE_CONTENT_ID, content, updated_by: currentUser.id, updated_at: new Date().toISOString() };
+    const { error } = await supabase.from('site_content').upsert(payload, { onConflict: 'id' });
+    if (error) throw error;
+    dom.setupAlert.hidden = true;
+    markSaved();
+    showToast('Alterações publicadas no site.');
+  } catch (error) {
     dom.setupAlert.hidden = false;
-    showToast(`Não foi possível guardar: ${error.message}`, true);
-    return;
+    showToast(`Não foi possível guardar: ${error?.message || 'verifique a ligação e tente novamente.'}`, true);
+  } finally {
+    dom.saveButton.disabled = false;
+    dom.saveButton.textContent = 'Guardar alterações';
   }
-  dom.setupAlert.hidden = true;
-  markSaved();
-  showToast('Alterações publicadas no site.');
 };
 
 const uploadImage = async (input) => {
@@ -428,18 +430,21 @@ const handleAction = (button) => {
 
 dom.loginForm.addEventListener('submit', async (event) => {
   event.preventDefault();
+  const submitButton = dom.loginForm.querySelector('button[type="submit"]');
+  submitButton.disabled = true;
   dom.loginStatus.textContent = 'A entrar…';
-  const { data, error } = await supabase.auth.signInWithPassword({ email: dom.loginEmail.value.trim(), password: dom.loginPassword.value });
-  if (error) {
-    dom.loginStatus.textContent = 'Email ou palavra-passe incorretos.';
-    return;
-  }
   try {
+    const { data, error } = await supabase.auth.signInWithPassword({ email: dom.loginEmail.value.trim(), password: dom.loginPassword.value });
+    if (error) throw error;
     await enterApp(data.user);
     dom.loginStatus.textContent = '';
   } catch (enterError) {
-    dom.loginStatus.textContent = enterError.message;
-    await supabase.auth.signOut();
+    dom.loginStatus.textContent = enterError?.message?.includes('autorização') || enterError?.message?.includes('configurado')
+      ? enterError.message
+      : 'Não foi possível entrar. Confirme os dados e a ligação à Internet.';
+    try { await supabase.auth.signOut(); } catch { /* A sessão já está indisponível. */ }
+  } finally {
+    submitButton.disabled = false;
   }
 });
 
