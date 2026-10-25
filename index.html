@@ -1002,8 +1002,13 @@
   
 
     <script>
+            // O GitHub Pages (licordgraca.pt) não corre a API; o envio é sempre feito pela Vercel.
+            const ORDER_API_URL = location.hostname.endsWith('vercel.app')
+                ? '/api/order'
+                : 'https://licordgraca.vercel.app/api/order';
+
             const sendOrderEmail = async (payload) => {
-                const response = await fetch('/api/order', {
+                const response = await fetch(ORDER_API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

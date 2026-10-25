@@ -12,6 +12,18 @@ const requiredFields = [
   'order_total'
 ];
 
+const allowedOrigins = [
+  'https://licordgraca.pt',
+  'https://www.licordgraca.pt'
+];
+
+const escapeHtml = (value = '') => String(value)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#039;');
+
 const ensureEnv = (name) => {
   const value = process.env[name];
   if (!value) {
@@ -53,6 +65,7 @@ const createTransporter = () => {
 };
 
 const buildEmailContent = (payload) => {
+  const field = (name) => escapeHtml(payload[name]);
   const lines = [
     `Nome: ${payload.customer_name}`,
     `Telefone: ${payload.customer_contact}`,
@@ -69,22 +82,33 @@ const buildEmailContent = (payload) => {
   return {
     text: lines.join('\n'),
     html: `
-      <h2>Nova encomenda</h2>
-      <p><strong>Nome:</strong> ${payload.customer_name}</p>
-      <p><strong>Telefone:</strong> ${payload.customer_contact}</p>
-      <p><strong>Email:</strong> ${payload.customer_email}</p>
-      <p><strong>Morada:</strong> ${payload.customer_address}</p>
-      <p><strong>NIF:</strong> ${payload.customer_nif || 'Não indicado'}</p>
-      <p><strong>Método de pagamento:</strong> ${payload.payment_method}</p>
-      <p><strong>Produtos:</strong><br>${payload.order_items.replace(/\n/g, '<br>')}</p>
-      <p><strong>Subtotal:</strong> ${payload.order_subtotal}</p>
-      <p><strong>Portes:</strong> ${payload.order_shipping}</p>
-      <p><strong>Total:</strong> ${payload.order_total}</p>
+      <p><strong>Nome:</strong> ${field('customer_name')}</p>
+      <p><strong>Telefone:</strong> ${field('customer_contact')}</p>
+      <p><strong>Email:</strong> ${field('customer_email')}</p>
+      <p><strong>Morada:</strong> ${field('customer_address')}</p>
+      <p><strong>NIF:</strong> ${field('customer_nif') || 'Não indicado'}</p>
+      <p><strong>Método de pagamento:</strong> ${field('payment_method')}</p>
+      <p><strong>Produtos:</strong><br>${field('order_items').replace(/\n/g, '<br>')}</p>
+      <p><strong>Subtotal:</strong> ${field('order_subtotal')}</p>
+      <p><strong>Portes:</strong> ${field('order_shipping')}</p>
+      <p><strong>Total:</strong> ${field('order_total')}</p>
     `
   };
 };
 
 module.exports = async (req, res) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  }
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed.' });
     return;
@@ -124,15 +148,30 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from,
       to,
+      replyTo: payload.customer_email,
       subject: 'Nova encomenda - Licor Dona Graça',
       text,
-      html
+      html: `<h2>Nova encomenda</h2>${html}`
     });
-
-    res.status(200).json({ ok: true });
-  }  catch (error) {
-  console.error("EMAIL ERROR:", error);
-  res.status(500).json({ error: error.message });
+  } catch (error) {
+    console.error('EMAIL ERROR:', error);
+    res.status(500).json({ error: error.message });
+    return;
   }
 
+  // A encomenda já chegou à loja; uma falha na cópia ao cliente não deve anulá-la.
+  try {
+    await transporter.sendMail({
+      from,
+      to: payload.customer_email,
+      replyTo: to,
+      subject: 'Recebemos a sua encomenda - Licor Dona Graça',
+      text: `Obrigado pela sua encomenda! Receberá entre 1 a 2 dias úteis informações para realizar o pagamento.\n\n${text}`,
+      html: `<h2>Obrigado pela sua encomenda!</h2><p>Receberá entre 1 a 2 dias úteis informações para realizar o pagamento.</p>${html}`
+    });
+  } catch (error) {
+    console.error('CUSTOMER EMAIL ERROR:', error);
+  }
+
+  res.status(200).json({ ok: true });
 };
