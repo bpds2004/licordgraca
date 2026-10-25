@@ -5,7 +5,7 @@ const root = resolve(import.meta.dirname, '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const content = JSON.parse(await read('content/default-content.json'));
 const vercel = JSON.parse(await read('vercel.json'));
-const publicHtml = await read('indexlicor.html');
+const publicHtml = await read('index.html');
 const publicCss = await read('licorstyles.css');
 const adminHtml = await read('backoffice/index.html');
 const adminCss = await read('backoffice/styles.css');
