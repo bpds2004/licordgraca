@@ -33,7 +33,9 @@ const dom = {
   dirtyIndicator: document.getElementById('dirty-indicator'),
   setupAlert: document.getElementById('setup-alert'),
   toast: document.getElementById('toast'),
-  importFile: document.getElementById('import-file')
+  importFile: document.getElementById('import-file'),
+  confirmDialog: document.getElementById('confirm-dialog'),
+  confirmMessage: document.getElementById('confirm-message')
 };
 
 let defaults = {};
@@ -80,6 +82,14 @@ const showToast = (message, error = false) => {
   dom.toast.classList.add('is-visible');
   toastTimer = setTimeout(() => dom.toast.classList.remove('is-visible'), 3600);
 };
+
+// Alguns browsers bloqueiam window.confirm(); este diálogo fica sempre disponível.
+const askConfirm = (message) => new Promise((resolve) => {
+  dom.confirmMessage.textContent = message;
+  dom.confirmDialog.returnValue = '';
+  dom.confirmDialog.addEventListener('close', () => resolve(dom.confirmDialog.returnValue === 'ok'), { once: true });
+  dom.confirmDialog.showModal();
+});
 
 const field = (label, path, options = {}) => {
   const value = getPath(content, path) ?? '';
@@ -362,7 +372,7 @@ const addItem = (list, item) => {
   renderEditor();
 };
 
-const handleAction = (button) => {
+const handleAction = async (button) => {
   const action = button.dataset.action;
   const index = Number(button.dataset.index);
   const subindex = Number(button.dataset.subindex);
@@ -379,7 +389,7 @@ const handleAction = (button) => {
     content.products[index].sizes.push({ label: 'Novo tamanho', price: 0 });
     markDirty(); renderEditor();
   }
-  if (action === 'delete-size' && confirm('Eliminar este tamanho?')) {
+  if (action === 'delete-size' && await askConfirm('Eliminar este tamanho?')) {
     content.products[index].sizes.splice(subindex, 1);
     markDirty(); renderEditor();
   }
@@ -388,7 +398,7 @@ const handleAction = (button) => {
     content.kits[index].optionGroups.push({ label: 'Escolhe uma opção', options: ['Opção 1'] });
     markDirty(); renderEditor();
   }
-  if (action === 'delete-option-group' && confirm('Eliminar este grupo de escolhas?')) {
+  if (action === 'delete-option-group' && await askConfirm('Eliminar este grupo de escolhas?')) {
     content.kits[index].optionGroups.splice(subindex, 1);
     markDirty(); renderEditor();
   }
@@ -405,7 +415,7 @@ const handleAction = (button) => {
       showToast('Mude primeiro os produtos desta categoria.', true);
       return;
     }
-    if (confirm('Eliminar este conteúdo? Esta ação só fica definitiva depois de guardar.')) {
+    if (await askConfirm('Eliminar este conteúdo? Esta ação só fica definitiva depois de guardar.')) {
       content[list].splice(index, 1);
       markDirty(); renderEditor();
     }
@@ -420,7 +430,7 @@ const handleAction = (button) => {
     URL.revokeObjectURL(url);
   }
   if (action === 'import') dom.importFile.click();
-  if (action === 'reset-defaults' && confirm('Repor todo o conteúdo inicial? Poderá rever antes de guardar.')) {
+  if (action === 'reset-defaults' && await askConfirm('Repor todo o conteúdo inicial? Poderá rever antes de guardar.')) {
     content = clone(defaults);
     markDirty();
     renderEditor();
@@ -479,7 +489,7 @@ dom.editor.addEventListener('click', (event) => {
 
 dom.saveButton.addEventListener('click', saveContent);
 dom.logoutButton.addEventListener('click', async () => {
-  if (dirty && !confirm('Existem alterações por guardar. Pretende mesmo sair?')) return;
+  if (dirty && !await askConfirm('Existem alterações por guardar. Pretende mesmo sair?')) return;
   await supabase.auth.signOut();
   location.reload();
 });

@@ -68,6 +68,16 @@
     </main>
   </div>
 
+  <dialog id="confirm-dialog" class="confirm-dialog">
+    <form method="dialog">
+      <p id="confirm-message"></p>
+      <div class="confirm-actions">
+        <button class="button button-secondary" value="cancel">Cancelar</button>
+        <button class="button button-danger" value="ok">Confirmar</button>
+      </div>
+    </form>
+  </dialog>
+
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <input id="import-file" type="file" accept="application/json" hidden>
 
